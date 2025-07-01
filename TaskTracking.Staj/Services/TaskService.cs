@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskTracking.Staj.Data;
 using TaskTracking.Staj.Dtos;
+using TaskTracking.Staj.Interfaces;
 using TaskTracking.Staj.Models;
 
 namespace TaskTracking.Staj.Services
 {
-    public class TaskService
+    public class TaskService:ITaskService
     {
         private readonly AppDbContext _context;
 
