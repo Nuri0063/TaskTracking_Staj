@@ -7,8 +7,8 @@
     using TaskTracking.Staj.Dtos;
     using TaskTracking.Staj.Interfaces;
     using TaskTracking.Staj.Models;
-
-    [Authorize]
+    
+    [Authorize]  //JWT tokeni zorunlu kılıyor
     [ApiController] 
     [Route("api/[controller]")]
     public class TaskController:ControllerBase
