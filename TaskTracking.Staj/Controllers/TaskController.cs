@@ -9,7 +9,7 @@
     using TaskTracking.Staj.Models;
 
     [Authorize]
-    [ApiController]
+    [ApiController] 
     [Route("api/[controller]")]
     public class TaskController:ControllerBase
     {
@@ -19,11 +19,11 @@
         {
             _taskService = taskService;
         }
-
+    
         private int GetUserId() =>
-            int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value); // Kullanıcının tokenında yer alan id bilgisini çekiyoruz.
 
-        [HttpGet]
+        [HttpGet] // 'GET /api/task' 
         public async Task<ActionResult> GetTasks()
         {
             var tasks = await _taskService.GetUserTasks(GetUserId());
@@ -45,10 +45,7 @@
             return Ok("Tamamlandı");
         }
 
-        private ActionResult NotFound(string v)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
