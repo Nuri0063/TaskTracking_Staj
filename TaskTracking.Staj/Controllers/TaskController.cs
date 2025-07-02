@@ -55,5 +55,13 @@
             return Ok("Silindi");
         }
 
+        [HttpGet("report")]
+        public async Task<ActionResult> GetReport()
+        {
+            var report = await _taskService.GetTaskReport(GetUserId());
+            return Ok(report);
+        }
+
+
     }
 }

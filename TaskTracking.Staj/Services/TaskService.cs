@@ -76,5 +76,20 @@ namespace TaskTracking.Staj.Services
             return await query.ToListAsync();
         }
 
+        public async Task<TaskReportDto> GetTaskReport(int userId)  //görevlerin raporlamasını yapıcak sistem
+        {
+            var total = await _context.TaskItems.CountAsync(t => t.UserId == userId);
+            var completed = await _context.TaskItems.CountAsync(t => t.UserId == userId && t.IsCompleted);
+            var active = total - completed;
+
+            return new TaskReportDto
+            {
+                TotalTasks = total,
+                CompletedTasks = completed,
+                ActiveTasks = active
+            };
+        }
+
+
     }
 }
