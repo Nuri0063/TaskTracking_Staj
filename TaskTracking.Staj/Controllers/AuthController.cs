@@ -5,6 +5,8 @@ using TaskTracking.Staj.Models;
 
 namespace TaskTracking.Staj.Controllers
 {
+    [ApiController] 
+    [Route("[controller]")] 
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
