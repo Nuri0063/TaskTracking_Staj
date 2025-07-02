@@ -9,5 +9,6 @@ namespace TaskTracking.Staj.Interfaces
         Task<TaskItem> AddTask(int userId, TaskItemDto dto);
         Task<bool> MarkAsCompleted(int taskId, int userId);
         Task<bool> DeleteTask(int taskId, int userId);
+        Task<List<TaskItem>> GetUserTasks(int userId, bool? isCompleted = null);
     }
 }

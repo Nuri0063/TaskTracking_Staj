@@ -63,5 +63,18 @@ namespace TaskTracking.Staj.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
+        public async Task<List<TaskItem>> GetUserTasks(int userId, bool? isCompleted = null) //Tamamlandı/tamamlanmadı filterisi yapacak metot
+        {
+            var query = _context.TaskItems
+                .Where(t => t.UserId == userId)
+                .AsQueryable();
+
+            if (isCompleted != null)
+                query = query.Where(t => t.IsCompleted == isCompleted);
+
+            return await query.ToListAsync();
+        }
+
     }
 }

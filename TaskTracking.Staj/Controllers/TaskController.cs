@@ -23,10 +23,10 @@
         private int GetUserId() =>
             int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value); // Kullanıcının tokenında yer alan id bilgisini çekiyoruz.
 
-        [HttpGet] // 'GET /api/task' 
-        public async Task<ActionResult> GetTasks()
+        [HttpGet]
+        public async Task<ActionResult> GetTasks([FromQuery] bool? isCompleted = null)
         {
-            var tasks = await _taskService.GetUserTasks(GetUserId());
+            var tasks = await _taskService.GetUserTasks(GetUserId(), isCompleted);
             return Ok(tasks);
         }
 
