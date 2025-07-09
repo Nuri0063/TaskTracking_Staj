@@ -55,7 +55,7 @@
             return Ok("Silindi");
         }
 
-        [HttpGet("report")]
+        [HttpGet("report")]  //görevlerin raporlarmasını vericek endpoint
         public async Task<ActionResult> GetReport()
         {
             var report = await _taskService.GetTaskReport(GetUserId());

@@ -10,6 +10,6 @@ namespace TaskTracking.Staj.Interfaces
         Task<bool> MarkAsCompleted(int taskId, int userId);
         Task<bool> DeleteTask(int taskId, int userId);
         Task<List<TaskItem>> GetUserTasks(int userId, bool? isCompleted = null);
-        Task<TaskReportDto> GetTaskReport(int userId);  
+        Task<TaskReportDto> GetTaskReport(int userId);   //görev raporlaması
     }
 }
