@@ -6,7 +6,7 @@ using TaskTracking.Staj.Models;
 namespace TaskTracking.Staj.Controllers
 {
     [ApiController] 
-    [Route("[controller]")] 
+    [Route("api/[controller]")] 
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
@@ -33,7 +33,10 @@ namespace TaskTracking.Staj.Controllers
             var token = await _authService.Login(dto.UserName, dto.Password);
             if (token == null) return Unauthorized("Kullanıcı adı veya şifre hatalı");
 
-            return Ok(token);
+            
+           return Ok(new { token }); //frontend tarafı dönüş tipini Json olarak beklediği için sorun yaşıyorduk. Dönüş tipi Json olarak belirlendi.
+
+            //return Ok(token);
         }
     }
 }

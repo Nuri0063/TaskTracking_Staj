@@ -42,6 +42,7 @@ builder.Services.AddCors(options =>
 
 
 var app = builder.Build();
+app.UseCors("AllowAll"); //.net'in angular ile iletiþimde engel koymamasý için
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -50,7 +51,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection(); þu an http protokolü kullandýðýmýz ve bunu https'e çevirmeye çalýþtýðý için API iletiþimi sekteye uðruyordu. Bundan dolayý þu anlýk bu satýrý kaldýrdýk
 
 app.UseAuthorization();
 
