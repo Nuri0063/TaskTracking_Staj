@@ -46,7 +46,19 @@
             //return Ok("Tamamlandı");
         }
 
-       
+        [HttpPut("{id}")] //görev güncelleme
+        public async Task<IActionResult> UpdateTask(int id, [FromBody] TaskItemDto updatedTask)
+        {
+            var userId = GetUserId();
+            var result = await _taskService.UpdateTask(id, updatedTask, userId);
+
+            if (!result)
+                return NotFound(new { message = "Görev bulunamadı veya güncelleme yetkiniz yok." });
+
+            return Ok(new { message = "Görev güncellendi." });
+        }
+
+
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)

@@ -89,6 +89,22 @@ namespace TaskTracking.Staj.Services
                 ActiveTasks = active
             };
         }
+        public async Task<bool> UpdateTask(int id, TaskItemDto updatedTask, int userId)
+        {
+            var task = await _context.TaskItems.FirstOrDefaultAsync(t => t.Id == id && t.UserId == userId);
+
+            if (task == null)
+                return false;
+
+            task.Title = updatedTask.Title;
+            task.Description = updatedTask.Description;
+            task.StartDate = updatedTask.StartDate;
+            task.EndDate = updatedTask.EndDate;
+            task.Priority = updatedTask.Priority;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
 
 
     }
