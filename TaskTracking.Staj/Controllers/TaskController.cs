@@ -42,7 +42,8 @@
         {
             var result = await _taskService.MarkAsCompleted(id, GetUserId());
             if (!result) return NotFound("Görev bulunamadı");
-            return Ok("Tamamlandı");
+            return Ok(new { message = "Tamamlandı" }); //angular json olarak cevap istiyor
+            //return Ok("Tamamlandı");
         }
 
        
