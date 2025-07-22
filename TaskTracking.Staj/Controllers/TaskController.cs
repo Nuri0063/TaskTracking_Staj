@@ -65,7 +65,8 @@
         {
             var result = await _taskService.DeleteTask(id, GetUserId());
             if (!result) return NotFound("Görev bulunamadı");
-            return Ok("Silindi");
+            return Ok(new { message = "Silindi" });// angular json olarak cevap istiyor
+            //return Ok("Silindi");
         }
 
         [HttpGet("report")]  //görevlerin raporlarmasını vericek endpoint

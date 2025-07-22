@@ -24,7 +24,8 @@ namespace TaskTracking.Staj.Controllers
 
             var user = new User { UserName = dto.UserName };
             await _authService.Register(user, dto.Password);
-            return Ok("Kayıt başarılı");
+            return Ok(new { message = "Kayıt Başarılı" });
+            // return Ok("Kayıt başarılı");
         }
 
         [HttpPost("login")]
