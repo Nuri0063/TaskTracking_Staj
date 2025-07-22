@@ -12,6 +12,8 @@ namespace TaskTracking.Staj.Interfaces
         Task<List<TaskItem>> GetUserTasks(int userId, bool? isCompleted = null);
         Task<TaskReportDto> GetTaskReport(int userId);   //görev raporlaması
         Task<bool> UpdateTask(int id, TaskItemDto updatedTask, int userId); //görev güncelleme
+        Task NotifyTaskChangedAsync();
+
 
     }
 }

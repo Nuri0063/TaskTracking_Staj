@@ -1,18 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using TaskTracking.Staj.Data;
 using TaskTracking.Staj.Dtos;
 using TaskTracking.Staj.Interfaces;
 using TaskTracking.Staj.Models;
+using TaskTracking.Staj.Hubs;
 
 namespace TaskTracking.Staj.Services
 {
-    public class TaskService:ITaskService
+    public class TaskService: ITaskService
     {
         private readonly AppDbContext _context;
+        private readonly IHubContext<NotificationHub> _hubContext;
 
-        public TaskService(AppDbContext context)
+        public TaskService(AppDbContext context,IHubContext<NotificationHub> hubContext)
         {
             _context = context;
+            _hubContext = hubContext;
         }
 
         public async Task<List<TaskItem>> GetUserTasks(int userId)
@@ -37,6 +41,7 @@ namespace TaskTracking.Staj.Services
 
             _context.TaskItems.Add(task);
             await _context.SaveChangesAsync();
+            await NotifyTaskChangedAsync(); // SignalR
             return task;
         }
 
@@ -49,6 +54,7 @@ namespace TaskTracking.Staj.Services
 
             task.IsCompleted = true;
             await _context.SaveChangesAsync();
+            await NotifyTaskChangedAsync(); // SignalR
             return true;
         }
 
@@ -61,6 +67,7 @@ namespace TaskTracking.Staj.Services
 
             _context.TaskItems.Remove(task);
             await _context.SaveChangesAsync();
+            await NotifyTaskChangedAsync(); // SignalR
             return true;
         }
 
@@ -103,7 +110,14 @@ namespace TaskTracking.Staj.Services
             task.Priority = updatedTask.Priority;
 
             await _context.SaveChangesAsync();
+            await NotifyTaskChangedAsync(); // SignalR
             return true;
+        }
+
+        //  SignalR yayını yapan yardımcı metot
+        public async Task NotifyTaskChangedAsync()
+        {
+            await _hubContext.Clients.All.SendAsync("TasksUpdated");
         }
 
 

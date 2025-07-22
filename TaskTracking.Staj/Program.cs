@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TaskTracking.Staj.Data;
+using TaskTracking.Staj.Hubs;
 using TaskTracking.Staj.Interfaces;
 using TaskTracking.Staj.Services;
 
@@ -13,6 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddSignalR(); //SingalR
 builder.Services.AddAuthentication("Bearer")
     .AddJwtBearer("Bearer", options =>
     {
@@ -56,5 +58,7 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<NotificationHub>("/hubs/notification"); //SingalR
 
 app.Run();
