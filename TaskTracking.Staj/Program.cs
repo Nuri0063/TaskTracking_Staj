@@ -35,9 +35,11 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyHeader()
+        policy.WithOrigins("http://localhost:4200") //angular tarafındaki frontend adresi
+              .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowAnyOrigin(); // sadece geliştirme için
+              .AllowCredentials() // SingalR
+              .SetIsOriginAllowed(origin => true);
     });
 });
 
