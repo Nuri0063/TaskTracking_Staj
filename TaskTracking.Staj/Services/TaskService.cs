@@ -13,10 +13,10 @@ namespace TaskTracking.Staj.Services
         private readonly AppDbContext _context;
         private readonly IHubContext<NotificationHub> _hubContext;
 
-        public TaskService(AppDbContext context,IHubContext<NotificationHub> hubContext)
+        public TaskService(AppDbContext context)
         {
             _context = context;
-            _hubContext = hubContext;
+            
         }
 
         public async Task<List<TaskItem>> GetUserTasks(int userId)
@@ -41,7 +41,7 @@ namespace TaskTracking.Staj.Services
 
             _context.TaskItems.Add(task);
             await _context.SaveChangesAsync();
-            await NotifyTaskChangedAsync(); // SignalR
+            
             return task;
         }
 
@@ -54,7 +54,7 @@ namespace TaskTracking.Staj.Services
 
             task.IsCompleted = true;
             await _context.SaveChangesAsync();
-            await NotifyTaskChangedAsync(); // SignalR
+           
             return true;
         }
 
@@ -67,7 +67,7 @@ namespace TaskTracking.Staj.Services
 
             _context.TaskItems.Remove(task);
             await _context.SaveChangesAsync();
-            await NotifyTaskChangedAsync(); // SignalR
+            
             return true;
         }
 
@@ -110,16 +110,11 @@ namespace TaskTracking.Staj.Services
             task.Priority = updatedTask.Priority;
 
             await _context.SaveChangesAsync();
-            await NotifyTaskChangedAsync(); // SignalR
+           
             return true;
         }
 
-        //  SignalR yayını yapan yardımcı metot
-        public async Task NotifyTaskChangedAsync()
-        {
-            await _hubContext.Clients.All.SendAsync("TasksUpdated");
-        }
-
+        
 
     }
 }
