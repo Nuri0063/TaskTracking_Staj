@@ -14,5 +14,11 @@ namespace TaskTracking.Staj.Hubs
 
             await base.OnConnectedAsync(); // baz metodun çalışmasını da sağla
         }
+
+        //Görev üzerinde bir işlem yapıldığında
+        public async Task NotifyTaskUpdate()
+        {
+            await Clients.Others.SendAsync("TasksUpdated");
+        }
     }
 }
