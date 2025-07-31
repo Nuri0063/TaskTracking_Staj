@@ -11,7 +11,6 @@ namespace TaskTracking.Staj.Services
     public class TaskService: ITaskService
     {
         private readonly AppDbContext _context;
-        private readonly IHubContext<NotificationHub> _hubContext;
 
         public TaskService(AppDbContext context)
         {
